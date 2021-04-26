@@ -1,0 +1,13 @@
+name: intake-tutorial
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.8
+  - dask-labextension
+  - fsspec
+  - gcsfs
+  - intake
+  - intake-esm
+  - jupyterlab>=3
+  - s3fs
