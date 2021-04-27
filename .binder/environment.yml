@@ -3,11 +3,15 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - python=3.8
   - dask-labextension
   - fsspec
   - gcsfs
   - intake
   - intake-esm
+  - intake-xarray
+  - hvplot
   - jupyterlab>=3
+  - python=3.8
+  - rasterio
   - s3fs
+  - datashader
