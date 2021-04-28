@@ -4,6 +4,9 @@ sources:
       Analysis Ready Sentinel-1 Backscatter Imagery. Documentation -->
       https://sentinel-s1-rtc-indigo-docs.s3-us-west-2.amazonaws.com/data_format.html#data-structure
     driver: rasterio
+    cache:
+      - argkey: urlpath
+        type: file
     parameters:
       utm_zone:
         description: UTM Zone component of tile ID
@@ -68,6 +71,7 @@ sources:
           - DSC
     args:
       urlpath: 's3://sentinel-s1-rtc-indigo/tiles/RTC/1/IW/{{ utm_zone }}/{{ latitude_band }}/{{ grid_square_id }}/{{ "%04d" | format(year) }}/{{ satellite }}_{{ "%04d" | format(year) }}{{ "%02d" | format(month) }}{{ "%02d" | format(day) }}_{{ tile_id}}_{{ orbit_direction }}/Gamma0_VV.tif'
-      chunks: {}
+      chunks:
+        y: 2745
       storage_options:
         anon: true

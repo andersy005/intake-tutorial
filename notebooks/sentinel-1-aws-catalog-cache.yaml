@@ -1,0 +1,79 @@
+sources:
+  sentinel_1_aws:
+    description: |
+      Analysis Ready Sentinel-1 Backscatter Imagery. Documentation -->
+      https://sentinel-s1-rtc-indigo-docs.s3-us-west-2.amazonaws.com/data_format.html#data-structure
+    driver: rasterio
+    # Enable the caching on first access
+    # The default cache location is in ~/.intake
+    cache:
+      - argkey: urlpath
+        type: file
+    parameters:
+      utm_zone:
+        description: UTM Zone component of tile ID
+        type: int
+        default: 14
+        min: 10
+        max: 19
+      latitude_band:
+        description: Latitude band (CONUS spans from R to U)
+        type: str
+        default: T
+        allowed:
+          - R
+          - S
+          - T
+          - U
+      grid_square_id:
+        description: The 100x100km Grid Square ID
+        type: str
+        default: PN
+        allowed:
+          - BE
+          - BF
+          - BG
+          - KK
+          - PN
+      year:
+        description: Year of the acquisition
+        type: int
+        default: 2020
+        min: 2016
+        max: 2021
+      month:
+        description: Month of the acquisition
+        type: int
+        default: 8
+        min: 1
+        max: 12
+      day:
+        description: Day of the acquisition
+        type: int
+        default: 1
+        min: 1
+        max: 31
+      satellite:
+        description: Satellite mission ID
+        type: str
+        default: S1A
+        allowed:
+          - S1A
+          - S2B
+      tile_id:
+        description: Sentinel-2 20m MGRS tile grid ID
+        type: str
+        default: 14TPN
+      orbit_direction:
+        description: Ascending or descending orbit direction
+        type: str
+        default: ASC
+        allowed:
+          - ASC
+          - DSC
+    args:
+      urlpath: 's3://sentinel-s1-rtc-indigo/tiles/RTC/1/IW/{{ utm_zone }}/{{ latitude_band }}/{{ grid_square_id }}/{{ "%04d" | format(year) }}/{{ satellite }}_{{ "%04d" | format(year) }}{{ "%02d" | format(month) }}{{ "%02d" | format(day) }}_{{ tile_id}}_{{ orbit_direction }}/Gamma0_VV.tif'
+      chunks:
+        y: 2745
+      storage_options:
+        anon: true
