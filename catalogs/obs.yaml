@@ -1,0 +1,32 @@
+sources:
+  sst_oi_bulk:
+    driver: netcdf
+    description: 'Optimum Interpolation Sea Surface Temperature (OISST) v2.1 provided by the NOAA/NCEI from their Web site at https://www.ncdc.noaa.gov/oisst/data-access'
+    parameters:
+      year:
+        description: 'Year'
+        type: int
+        default: 2010
+        min: 1981
+        max: 2020
+      month:
+        description: 'month'
+        type: int
+        default: 1
+        min: 1
+        max: 12
+      day:
+        description: 'day'
+        type: int
+        default: 1
+        min: 1
+        max: 31
+
+    args:
+      urlpath: simplecache::https://www.ncei.noaa.gov/thredds/fileServer/OisstBase/NetCDF/V2.1/AVHRR/{{ "%04d" | format(year) }}{{ "%02d" | format(month) }}/oisst-avhrr-v02r01.{{ "%04d" | format(year) }}{{ "%02d" | format(month) }}{{ "%02d" | format(day) }}.nc
+      xarray_kwargs:
+        decode_times: true
+      chunks: {}
+      storage_options:
+        simplecache:
+          same_names: true
